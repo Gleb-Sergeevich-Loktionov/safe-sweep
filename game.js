@@ -57,7 +57,8 @@
   let gameState = 'ready'; // 'ready' | 'playing' | 'won' | 'lost'
   let timerInterval = null, elapsed = 0, timerStarted = false;
   let soundOn = true;
-  let suppressClick = false; // guards against click firing right after a long-press flag
+  let suppressClick = false; // guards against click firing right after a touch long-press flag
+  let loseOverlayTimer = null; // setTimeout handle for the delayed lose overlay
 
   const BEST_KEY = 'safeSweep_best_';
 
@@ -368,7 +369,7 @@
     Sfx.play('explosion');
     boardEl.classList.add('shake');
     setTimeout(() => boardEl.classList.remove('shake'), 480);
-    setTimeout(() => loseOverlay.classList.add('show'), 620);
+    loseOverlayTimer = setTimeout(() => { loseOverlay.classList.add('show'); loseOverlayTimer = null; }, 620);
   }
 
   function triggerWin() {
@@ -396,6 +397,9 @@
   }
 
   function resetGame() {
+    // Cancel any pending lose-overlay show so clicking restart during the
+    // 620ms delay doesn't flash a stale overlay onto the fresh board.
+    if (loseOverlayTimer) { clearTimeout(loseOverlayTimer); loseOverlayTimer = null; }
     stopTimer();
     elapsed = 0;
     timerStarted = false;
@@ -450,8 +454,14 @@
     const cellEl = e.target.closest('.cell');
     if (!cellEl) return;
     toggleFlag(+cellEl.dataset.row, +cellEl.dataset.col);
-    suppressClick = true;
-    setTimeout(() => { suppressClick = false; }, 300);
+    // Only suppress the next click for touch-originated contextmenu (long-press),
+    // where the browser may fire a synthetic click right after the flag toggle.
+    // Desktop right-click has no following click, so arming suppressClick there
+    // would wrongly swallow the next legitimate left-click.
+    if (e.pointerType === 'touch') {
+      suppressClick = true;
+      setTimeout(() => { suppressClick = false; }, 300);
+    }
   }
 
   // ---------- Init ----------

@@ -29,3 +29,7 @@ __pycache__/
 
 # Factory / agent artifacts
 .factory/
+
+# Recording guide — private screen-recording script for the user, not part of
+# the public product (contains personal narration notes).
+recording-guide.md

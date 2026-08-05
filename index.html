@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0a14" />
+  <meta name="description" content="Safe Sweep - a reverse minesweeper where mines are visible and you reveal every safe cell." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A3%3C/text%3E%3C/svg%3E" />
+  <title>Safe Sweep - Reverse Minesweeper</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="title-row">
+        <h1 class="title">Safe&nbsp;Sweep</h1>
+        <p class="subtitle">Reverse Minesweeper</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Time</span>
+          <span class="stat-value" id="timer">00:00</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Mines</span>
+          <span class="stat-value" id="mineCount">10</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Flags</span>
+          <span class="stat-value" id="flagCount">0</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="difficulty" role="group" aria-label="Difficulty">
+          <button type="button" class="diff-btn active" data-diff="easy">Easy</button>
+          <button type="button" class="diff-btn" data-diff="medium">Medium</button>
+          <button type="button" class="diff-btn" data-diff="hard">Hard</button>
+        </div>
+        <button type="button" class="icon-btn" id="soundToggle" aria-label="Toggle sound" title="Toggle sound">&#128266;</button>
+        <button type="button" class="icon-btn" id="restartBtn" aria-label="New game" title="New game">&#8635;</button>
+      </div>
+
+      <div class="best-times" id="bestTimes" aria-label="Best times"></div>
+    </header>
+
+    <main class="board-wrap">
+      <div id="board" class="board" role="grid" aria-label="Game board"></div>
+
+      <div class="overlay" id="winOverlay" role="dialog" aria-modal="true" aria-label="You win">
+        <div class="overlay-card win-card">
+          <div class="overlay-icon">&#127942;</div>
+          <h2>You Win!</h2>
+          <p class="overlay-time" id="winTime"></p>
+          <p class="overlay-best" id="winBest"></p>
+          <button type="button" class="btn-primary" id="winRestart">Play Again</button>
+        </div>
+      </div>
+
+      <div class="overlay" id="loseOverlay" role="dialog" aria-modal="true" aria-label="You lose">
+        <div class="overlay-card lose-card">
+          <div class="overlay-icon">&#128165;</div>
+          <h2>Boom!</h2>
+          <p class="overlay-sub">You hit a mine</p>
+          <button type="button" class="btn-primary" id="loseRestart">Try Again</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span class="hint">Mines glow red. Reveal every dark cell. Right-click (or long-press) to flag.</span>
+    </footer>
+  </div>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script src="game.js"></script>
+</body>
+</html>

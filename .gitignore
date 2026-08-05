@@ -1,0 +1,31 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Node (not used by this project, but ignored just in case)
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Python (not used by this project, but ignored just in case)
+__pycache__/
+*.pyc
+.venv/
+
+# WaiWai assignment source page (saved HTML, not part of the product)
+Тестовое задание для Product Hacker _ WaiWai.html
+Тестовое задание для Product Hacker _ WaiWai_files/
+
+# Factory / agent artifacts
+.factory/
